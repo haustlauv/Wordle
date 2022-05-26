@@ -104,6 +104,13 @@ while animating:
 
             x += sq_size + margin
         y += sq_size + margin
+    
+    #show correct answer after a game over
+    if len(guesses) == 6 and guesses[5] != answer:
+        game_over = True
+        letters = font.render(answer, False, grey)
+        surface = letters.get_rect(center = (width//2, height-b_margin/2-margin)) 
+        screen.blit(letters, surface)
 
     # update the screen
     pygame.display.flip()
@@ -136,6 +143,14 @@ while animating:
                     input = ""
                 elif len(input) == 5 and input not in dict_guessing:
                     input = ""
+
+            # spacebar to restart the game
+            elif event.key == pygame.K_SPACE:
+                game_over = False
+                answer = random.choice(dict_answers)
+                guesses = []
+                unguessed = alphabet
+                input = ""
 
             # regular text input
             elif len(input) < 5 and not game_over:
